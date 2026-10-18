@@ -1,0 +1,238 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <world name="maze_world">
+    <!-- Sun -->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Ground Plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Physics Settings -->
+    <physics type="ode">
+      <real_time_update_rate>1000.0</real_time_update_rate>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+    </physics>
+
+    <!-- GUI Camera View (overhead angled view of the 5x5 grid) -->
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>4.0 -4.0 14.0 0 1.25 -1.57</pose>
+        <view_controller>orbit</view_controller>
+      </camera>
+    </gui>
+
+    <!--
+      ===============================================================
+      5x5 GRID ARENA (Spacing = 2.0m) - SCATTERED RANDOM OBSTACLES
+      Grid coords (row, col) -> World (x = (4 - row) * 2, y = -col * 2)
+
+      row 0 (x=8.0): (8, 0)      [OBS 1 (8,-2)] (8,-4)     (8,-6)     [GREEN GOAL (8,-8)]
+      row 1 (x=6.0): (6, 0)      (6,-2)         (6,-4)     [OBS 2 (6,-6)] (6,-8)
+      row 2 (x=4.0): (4, 0)      [OBS 3 (4,-2)] (4,-4)     (4,-6)     [OBS 4 (4,-8)]
+      row 3 (x=2.0): (2, 0)      (2,-2)         [OBS 5 (2,-4)] (2,-6) (2,-8)
+      row 4 (x=0.0): [RED START] (0,-2)         (0,-4)     [OBS 6 (0,-6)] (0,-8)
+      ===============================================================
+    -->
+
+    <!-- =================== 5x5 GRID FLOOR TILES =================== -->
+    <model name="grid_floor">
+      <static>true</static>
+      <!-- Row 0: x=8.0 -->
+      <link name="tile_0_0"><pose>8.0  0.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_0_1"><pose>8.0 -2.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_0_2"><pose>8.0 -4.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_0_3"><pose>8.0 -6.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_0_4"><pose>8.0 -8.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.2 0.8 0.2 1</ambient><diffuse>0.2 0.8 0.2 1</diffuse></material></visual></link>
+
+      <!-- Row 1: x=6.0 -->
+      <link name="tile_1_0"><pose>6.0  0.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_1_1"><pose>6.0 -2.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_1_2"><pose>6.0 -4.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_1_3"><pose>6.0 -6.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_1_4"><pose>6.0 -8.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+
+      <!-- Row 2: x=4.0 -->
+      <link name="tile_2_0"><pose>4.0  0.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_2_1"><pose>4.0 -2.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_2_2"><pose>4.0 -4.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_2_3"><pose>4.0 -6.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_2_4"><pose>4.0 -8.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+
+      <!-- Row 3: x=2.0 -->
+      <link name="tile_3_0"><pose>2.0  0.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_3_1"><pose>2.0 -2.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_3_2"><pose>2.0 -4.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_3_3"><pose>2.0 -6.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_3_4"><pose>2.0 -8.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+
+      <!-- Row 4: x=0.0 -->
+      <link name="tile_4_0"><pose>0.0  0.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.9 0.2 0.2 1</ambient><diffuse>0.9 0.2 0.2 1</diffuse></material></visual></link>
+      <link name="tile_4_1"><pose>0.0 -2.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_4_2"><pose>0.0 -4.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+      <link name="tile_4_3"><pose>0.0 -6.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.85 0.85 0.85 1</ambient><diffuse>0.85 0.85 0.85 1</diffuse></material></visual></link>
+      <link name="tile_4_4"><pose>0.0 -8.0 0.005 0 0 0</pose><visual name="v"><geometry><box><size>1.9 1.9 0.01</size></box></geometry><material><ambient>0.72 0.72 0.72 1</ambient><diffuse>0.72 0.72 0.72 1</diffuse></material></visual></link>
+    </model>
+
+    <!-- =================== START PAD (Red, World 0, 0) =================== -->
+    <model name="start_pad">
+      <static>true</static>
+      <pose>0.0 0.0 0.02 0 0 0</pose>
+      <link name="link">
+        <visual name="visual">
+          <geometry><box><size>1.4 1.4 0.02</size></box></geometry>
+          <material>
+            <ambient>0.9 0.1 0.1 1.0</ambient>
+            <diffuse>0.9 0.1 0.1 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- =================== GOAL (Green Obstacle Pillar, World 8, -8) =================== -->
+    <model name="goal_obstacle">
+      <static>true</static>
+      <pose>8.0 -8.0 1.0 0 0 0</pose>
+      <link name="link">
+        <visual name="visual_pillar">
+          <geometry><box><size>1.0 1.0 2.0</size></box></geometry>
+          <material>
+            <ambient>0.1 0.9 0.15 1.0</ambient>
+            <diffuse>0.1 0.9 0.15 1.0</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- =================== SCATTERED RANDOM OBSTACLES =================== -->
+    <!-- HOLE 1: Grid(0,1) => World(8.0, -2.0) -->
+    <model name="obstacle_hole1">
+      <static>true</static>
+      <pose>8.0 -2.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.9 0.9 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.9 0.9 2.0</size></box></geometry>
+          <material><ambient>0.4 0.4 0.45 1.0</ambient><diffuse>0.4 0.4 0.45 1.0</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- HOLE 2: Grid(1,3) => World(6.0, -6.0) -->
+    <model name="obstacle_hole2">
+      <static>true</static>
+      <pose>6.0 -6.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.9 0.9 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.9 0.9 2.0</size></box></geometry>
+          <material><ambient>0.4 0.4 0.45 1.0</ambient><diffuse>0.4 0.4 0.45 1.0</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- HOLE 3: Grid(2,1) => World(4.0, -2.0) -->
+    <model name="obstacle_hole3">
+      <static>true</static>
+      <pose>4.0 -2.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.9 0.9 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.9 0.9 2.0</size></box></geometry>
+          <material><ambient>0.4 0.4 0.45 1.0</ambient><diffuse>0.4 0.4 0.45 1.0</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- HOLE 4: Grid(2,4) => World(4.0, -8.0) -->
+    <model name="obstacle_hole4">
+      <static>true</static>
+      <pose>4.0 -8.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.9 0.9 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.9 0.9 2.0</size></box></geometry>
+          <material><ambient>0.4 0.4 0.45 1.0</ambient><diffuse>0.4 0.4 0.45 1.0</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- HOLE 5: Grid(3,2) => World(2.0, -4.0) -->
+    <model name="obstacle_hole5">
+      <static>true</static>
+      <pose>2.0 -4.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.9 0.9 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.9 0.9 2.0</size></box></geometry>
+          <material><ambient>0.4 0.4 0.45 1.0</ambient><diffuse>0.4 0.4 0.45 1.0</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- HOLE 6: Grid(4,3) => World(0.0, -6.0) -->
+    <model name="obstacle_hole6">
+      <static>true</static>
+      <pose>0.0 -6.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="col"><geometry><box><size>0.9 0.9 2.0</size></box></geometry></collision>
+        <visual name="vis"><geometry><box><size>0.9 0.9 2.0</size></box></geometry>
+          <material><ambient>0.4 0.4 0.45 1.0</ambient><diffuse>0.4 0.4 0.45 1.0</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- =================== BLUE BOUNDARY WALLS =================== -->
+    <!-- North wall (x = 9.15) -->
+    <model name="boundary_north">
+      <static>true</static>
+      <pose>9.15 -4.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.2 10.5 2.0</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 10.5 2.0</size></box></geometry>
+          <material><ambient>0.1 0.3 0.85 0.75</ambient><diffuse>0.1 0.3 0.85 0.75</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- South wall (x = -1.15) -->
+    <model name="boundary_south">
+      <static>true</static>
+      <pose>-1.15 -4.0 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>0.2 10.5 2.0</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>0.2 10.5 2.0</size></box></geometry>
+          <material><ambient>0.1 0.3 0.85 0.75</ambient><diffuse>0.1 0.3 0.85 0.75</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- West wall (y = 1.15) -->
+    <model name="boundary_west">
+      <static>true</static>
+      <pose>4.0 1.15 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>10.5 0.2 2.0</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>10.5 0.2 2.0</size></box></geometry>
+          <material><ambient>0.1 0.3 0.85 0.75</ambient><diffuse>0.1 0.3 0.85 0.75</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+    <!-- East wall (y = -9.15) -->
+    <model name="boundary_east">
+      <static>true</static>
+      <pose>4.0 -9.15 1.0 0 0 0</pose>
+      <link name="link">
+        <collision name="collision"><geometry><box><size>10.5 0.2 2.0</size></box></geometry></collision>
+        <visual name="visual">
+          <geometry><box><size>10.5 0.2 2.0</size></box></geometry>
+          <material><ambient>0.1 0.3 0.85 0.75</ambient><diffuse>0.1 0.3 0.85 0.75</diffuse></material>
+        </visual>
+      </link>
+    </model>
+
+  </world>
+</sdf>
